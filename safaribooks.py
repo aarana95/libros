@@ -16,6 +16,7 @@ from random import random
 from lxml import html, etree
 from multiprocessing import Process, Queue, Value
 from urllib.parse import urljoin, urlparse, parse_qs, quote_plus
+import streamlit as st
 
 
 PATH = os.path.dirname(os.path.realpath(__file__))
@@ -464,14 +465,14 @@ class SafariBooks:
     def do_login(self, email, password):
         response = self.requests_provider(self.LOGIN_ENTRY_URL)
         if response == 0:
-            self.display.exit("Login: unable to reach Safari Books Online. Try again...")
+            st.write("Login: unable to reach Safari Books Online. Try again...")
 
         next_parameter = None
         try:
             next_parameter = parse_qs(urlparse(response.request.url).query)["next"][0]
 
         except (AttributeError, ValueError, IndexError):
-            self.display.exit("Login: unable to complete login on Safari Books Online. Try again...")
+            st.write("Login: unable to complete login on Safari Books Online. Try again...")
 
         redirect_uri = API_ORIGIN_URL + quote_plus(next_parameter)
 
@@ -487,7 +488,7 @@ class SafariBooks:
         )
 
         if response == 0:
-            self.display.exit("Login: unable to perform auth to Safari Books Online.\n    Try again...")
+            st.write("Login: unable to perform auth to Safari Books Online.\n    Try again...")
 
         if response.status_code != 200:  # TODO To be reviewed
             try:
@@ -498,14 +499,14 @@ class SafariBooks:
                              if "password" in error or "email" in error] if len(errors_message) else []) + \
                            (["    `ReCaptcha required (wait or do logout from the website).`"] if len(
                                recaptcha) else [])
-                self.display.exit(
+                st.write(
                     "Login: unable to perform auth login to Safari Books Online.\n" + self.display.SH_YELLOW +
                     "[*]" + self.display.SH_DEFAULT + " Details:\n" + "%s" % "\n".join(
                         messages if len(messages) else ["    Unexpected error!"])
                 )
             except (html.etree.ParseError, html.etree.ParserError) as parsing_error:
-                self.display.error(parsing_error)
-                self.display.exit(
+                st.write(parsing_error)
+                st.write(
                     "Login: your login went wrong and it encountered in an error"
                     " trying to parse the login details of Safari Books Online. Try again..."
                 )
