@@ -3,19 +3,22 @@ import streamlit as st
 #import matplotlib.pyplot as plt
 #import numpy as np
 import safaribooks as sb
+import argparse
+
+args = argparse.Namespace()
 
 st.title('Estamos probando')
 user = st.text_input("Usuario:", value="")
 password = st.text_input("Contraseña:", value="", type="password")
-code = st.text_input("Código del libro:", value="")
+args.bookid = st.text_input("Código del libro:", value="")
 
 
 credentials = user + ":" + password
 
-parsed_cred = sb.SafariBooks.parse_cred(credentials)
-st.write(parsed_cred)
-if not parsed_cred:
-    st.write("Mal metido " + user + " o contraseña: " + password)
+args.cred = sb.SafariBooks.parse_cred(credentials)
 
-args_parsed = {'cred':{0: user, 1: password}, 'bookid':code}
-sb.SafariBooks(args_parsed)
+if not args.cred:
+    st.write("Mal metido " + user + " o contraseña: " + password)
+st.write(args)
+
+sb.SafariBooks(args)

@@ -1089,6 +1089,7 @@ if __name__ == "__main__":
     )
 
     args_parsed = arguments.parse_args()
+    print(type(args_parsed))
     print(args_parsed)
     if args_parsed.cred or args_parsed.login:
         user_email = ""
