@@ -512,7 +512,7 @@ class SafariBooks:
                 )
             """
             st.write("Mail o contraseña mal metidos")
-            sys.exit(0)
+            st.stop()
         self.jwt = response.json()  # TODO: save JWT Tokens and use the refresh_token to restore user session
         response = self.requests_provider(self.jwt["redirect_uri"])
         if response == 0:
