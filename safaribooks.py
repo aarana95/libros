@@ -539,6 +539,7 @@ class SafariBooks:
 
         response = response.json()
         if not isinstance(response, dict) or len(response.keys()) == 1:
+            st.write("Código del libro incorrecto.")
             self.display.exit(self.display.api_error(response))
 
         if "last_chapter_read" in response:
