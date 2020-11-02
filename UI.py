@@ -15,10 +15,11 @@ args.bookid = st.text_input("Código del libro:", value="")
 
 credentials = user + ":" + password
 
-args.cred = sb.SafariBooks.parse_cred(credentials)
-
-if not args.cred:
+parsed_cred = sb.SafariBooks.parse_cred(credentials)
+st.write(parsed_cred)
+if not parsed_cred:
     st.write("Mal metido " + user + " o contraseña: " + password)
-st.write(args)
+else:
+    args.cred = parsed_cred
 
 sb.SafariBooks(args)
