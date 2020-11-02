@@ -8,18 +8,19 @@ import argparse
 args = argparse.Namespace()
 
 st.title('Estamos probando')
+
 user = st.text_input("Usuario:", value="")
 password = st.text_input("Contraseña:", value="", type="password")
 args.bookid = st.text_input("Código del libro:", value="")
 
 
 credentials = user + ":" + password
+args.cred = sb.SafariBooks.parse_cred(credentials)
 
-parsed_cred = sb.SafariBooks.parse_cred(credentials)
-#st.write(parsed_cred)
-if not parsed_cred:
-    st.write("Mal metido " + user + " o contraseña: " + password)
-else:
-    args.cred = parsed_cred
+#De momento por defecto
+args.kindle = False
+args.log = False
+args.login = False
+args.no_cookies = False
 
-#sb.SafariBooks(args)
+sb.SafariBooks(args)
