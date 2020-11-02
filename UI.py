@@ -17,4 +17,4 @@ st.write(parsed_cred)
 if not parsed_cred:
     st.write("Mal metido " + user + " o contraseña: " + password)
 
-@SafariBooks(args_parsed)
+#@SafariBooks(args_parsed)
