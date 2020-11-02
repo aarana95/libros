@@ -491,7 +491,7 @@ class SafariBooks:
             st.write("Login: unable to perform auth to Safari Books Online.\n    Try again...")
 
         if response.status_code != 200:  # TODO To be reviewed
-            try:
+            """try:
                 error_page = html.fromstring(response.text)
                 errors_message = error_page.xpath("//ul[@class='errorlist']//li/text()")
                 recaptcha = error_page.xpath("//div[@class='g-recaptcha']")
@@ -510,7 +510,9 @@ class SafariBooks:
                     "Login: your login went wrong and it encountered in an error"
                     " trying to parse the login details of Safari Books Online. Try again..."
                 )
-
+            """
+            st.write("Mail o contraseña mal metidos")
+            sys.exit(1)
         self.jwt = response.json()  # TODO: save JWT Tokens and use the refresh_token to restore user session
         response = self.requests_provider(self.jwt["redirect_uri"])
         if response == 0:
