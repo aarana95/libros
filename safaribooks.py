@@ -126,7 +126,7 @@ class Display:
         self.out(output)
 
         self.save_last_request()
-        #sys.exit(1)
+        sys.exit(1)
         st.stop()
     def unhandled_exception(self, _, o, tb):
         self.log("".join(traceback.format_tb(tb)))
