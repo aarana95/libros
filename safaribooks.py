@@ -127,6 +127,7 @@ class Display:
 
         self.save_last_request()
         st.write(error)
+        st.stop()
         sys.exit(1)
 
     def unhandled_exception(self, _, o, tb):
