@@ -5,6 +5,7 @@ import streamlit as st
 import safaribooks as sb
 import argparse
 import sys
+import SessionState
 args = argparse.Namespace()
 
 args.kindle = False
@@ -12,17 +13,19 @@ args.log = False
 args.login = False
 args.no_cookies = False
 
-st.title('Estamos probando')
-
-user = st.text_input("Usuario:", value="")
-password = st.text_input("Contraseña:", value="", type="password")
-
-
-
-credentials = user + ":" + password
 
 @st.cache
-def main(args, credentials):
+def main(args):
+    session_state = SessionState.get(name="", button_start=False)
+
+    st.title('Estamos probando')
+
+    session_state.user = st.text_input("Usuario:", value="")
+    session_state.password = st.text_input("Contraseña:", value="", type="password")
+
+    credentials = session_state.user + ":" + session_state.password
+
+
     if st.button("Login"):
         args.cred = sb.SafariBooks.parse_cred(credentials)
         libro = sb.SafariBooks(args)
@@ -36,4 +39,4 @@ def main(args, credentials):
             sys.stdout.write("funciona?")
             libro.descargar_libro(args)
 
-main(args, credentials)
+main(args)
