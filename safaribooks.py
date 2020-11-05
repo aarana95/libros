@@ -19,7 +19,7 @@ from urllib.parse import urljoin, urlparse, parse_qs, quote_plus
 import streamlit as st
 
 
-PATH = os.path.dirname(os.path.realpath("/"))
+PATH = os.path.dirname(os.path.realpath(__file__))
 COOKIES_FILE = os.path.join(PATH, "cookies.json")
 
 ORLY_BASE_HOST = "oreilly.com"  # PLEASE INSERT URL HERE
