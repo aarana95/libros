@@ -18,7 +18,7 @@ def main(args):
     session_state = SessionState.get(name="", button_start=False)
 
     st.title('Estamos probando')
-
+    st.write(session_state.login_button)
     session_state.user = st.text_input("Usuario:", value="")
     session_state.password = st.text_input("Contraseña:", value="", type="password")
 
