@@ -14,7 +14,6 @@ args.login = False
 args.no_cookies = False
 
 
-@st.cache
 def main(args):
     session_state = SessionState.get(name="", button_start=False)
 
