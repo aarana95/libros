@@ -31,6 +31,7 @@ def main(args):
         csv = df.to_csv(index=False)
         b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
         href = f'<a href="data:file/csv;base64,{b64}">Download csv file</a>'
+        st.write(href)
         return href
     #if st.button('Go to Streamlit'):
     df = pd.DataFrame({'A': [1, 2], 'B': [2, 3]})
