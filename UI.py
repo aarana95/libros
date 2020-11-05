@@ -7,6 +7,7 @@ import argparse
 import sys
 import SessionState
 import webbrowser
+from bokeh.models.widgets import Div
 args = argparse.Namespace()
 
 args.kindle = False
@@ -21,9 +22,12 @@ def main(args):
     text_file.close()
     #st.markdown(href = f'<a href="data:Books">Download csv file</a>', unsafe_allow_html=True)
 
-    if st.button("descargar"):
-        webbrowser.open("Books/Output.txt")
-
+    if st.button('Go to Streamlit'):
+        js = "window.open('https://www.streamlit.io/')"  # New tab or window
+        js = "window.location.href = 'https://www.streamlit.io/'"  # Current tab
+        html = '<img src onerror="{}">'.format(js)
+        div = Div(text=html)
+        st.bokeh_chart(div)
     session_state = SessionState.get(name="", button_start=False)
 
     st.title('Estamos probando')
