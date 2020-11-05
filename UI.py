@@ -33,7 +33,9 @@ def main(args):
         href = f'<a href="data:file/csv;base64,{b64}">Download csv file</a>'
         st.write(href)
         return href
-    #if st.button('Go to Streamlit'):
+    if st.button('Go to Streamlit'):
+        webbrowser.open_new_tab(get_table_download_link(df))
+
     df = pd.DataFrame({'A': [1, 2], 'B': [2, 3]})
     st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
