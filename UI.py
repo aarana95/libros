@@ -24,7 +24,7 @@ def main(args):
 
     credentials = session_state.user + ":" + session_state.password
 
-
+    st.write(hasattr(session_state, 'login_button'))
 
     if not hasattr(session_state, 'login_button'):
         session_state.login_button = st.button("Login")
