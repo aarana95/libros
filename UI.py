@@ -33,11 +33,6 @@ def main(args):
     if st.button('Go to Streamlit'):
         st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
-        js = "window.open('https://www.streamlit.io/')"  # New tab or window
-        js = "window.location.href = 'Books/Output.txt'"  # Current tab
-        html = '<img src onerror="{}">'.format(js)
-        div = Div(text=html)
-        st.bokeh_chart(div)
 
 
     session_state = SessionState.get(name="", button_start=False)
