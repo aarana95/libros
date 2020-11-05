@@ -315,7 +315,8 @@ class SafariBooks:
 
     def __init__(self, args):
         self.args = args
-        self.display = Display("info_%s.log" % escape(args.bookid))
+        #self.display = Display("info_%s.log" % escape(args.bookid))
+        self.display = Display("info.log")
         self.display.intro()
 
         self.session = requests.Session()
@@ -341,6 +342,10 @@ class SafariBooks:
                 json.dump(self.session.cookies.get_dict(), open(COOKIES_FILE, 'w'))
 
         self.check_login()
+
+
+
+    def descargar_libro(self, args):
 
         self.book_id = args.bookid
         self.api_url = self.API_TEMPLATE.format(self.book_id)
