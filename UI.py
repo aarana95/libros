@@ -27,7 +27,7 @@ def main(args):
     st.write(hasattr(session_state, 'login_button'))
     st.write(session_state.password)
     st.write(hasattr(session_state, 'password'))
-    if not hasattr(session_state, 'login_button'):
+    if not hasattr(session_state, 'login_button') or (session_state.user == '' or session_state.password == ''):
         session_state.login_button = st.button("Login")
 
     if session_state.login_button:
