@@ -19,7 +19,7 @@ args.no_cookies = False
 def main(args):
     text_file = open("Books/Output.txt", "w")
     text_file.write("Purchase Amount")
-    text_file.close()
+    #text_file.close()
     #st.markdown(href = f'<a href="data:Books">Download csv file</a>', unsafe_allow_html=True)
     def get_table_download_link(text_file):
         """Generates a link allowing the data in a given panda dataframe to be downloaded
