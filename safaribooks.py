@@ -128,7 +128,7 @@ class Display:
         self.save_last_request()
         st.write(error)
         st.write("Lo que viene siendo que has metido el mail o la contraseña mal!")
-        #st.stop()
+        st.stop()
         sys.exit(1)
 
     def unhandled_exception(self, _, o, tb):
