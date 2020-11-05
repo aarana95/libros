@@ -28,7 +28,7 @@ if st.button("Login"):
 
 #De momento por defecto
     args.bookid = st.text_input("Código del libro:", value="")
-
+    sys.stdout.write("funciona?")
     if st.button("Descargar libro"):
         sys.stdout.write("funciona?")
         libro.descargar_libro(args)
