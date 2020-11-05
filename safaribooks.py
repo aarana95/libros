@@ -1054,8 +1054,8 @@ class SafariBooks:
 
 
 # MAIN
-if True:#__name__ == "__main__":
-    """
+if __name__ == "__main__":
+
     arguments = argparse.ArgumentParser(prog="safaribooks.py",
                                         description="Download and generate an EPUB of your favorite books"
                                                     " from Safari Books Online.",
@@ -1116,7 +1116,6 @@ if True:#__name__ == "__main__":
     else:
         if args_parsed.no_cookies:
             arguments.error("invalid option: `--no-cookies` is valid only if you use the `--cred` option")
-            """
     pre_cred = "daniel.data@thebridgeschool.es:Productitos2020"
     parsed_cred = SafariBooks.parse_cred(pre_cred)
 
