@@ -34,12 +34,23 @@ def main(args):
         st.write(href)
         return href
 
+    def get_table_download_link2(df):
+        """Generates a link allowing the data in a given panda dataframe to be downloaded
+        in:  dataframe
+        out: href string
+        """
+        csv = df.to_csv(index=False)
+        b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+        href = f"data:file/csv;base64,{b64}"
+        st.write(href)
+        return href
+
 
     df = pd.DataFrame({'A': [1, 2], 'B': [2, 3]})
     st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
     if st.button('Go to Streamlit'):
-        webbrowser.open_new_tab(get_table_download_link(df))
+        webbrowser.open_new_tab(get_table_download_link2(df))
 
 
 
