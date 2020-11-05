@@ -31,9 +31,8 @@ def main(args):
         st.write(args.cred)
 
         args.bookid = st.text_input("Código del libro:", value="")
-        sys.stdout.write("funciona?")
 
-
+        st.write(session_state.login_button)
         if st.button("Descargar libro"):
             sys.stdout.write("funciona?")
             session_state.libro.descargar_libro(args)
