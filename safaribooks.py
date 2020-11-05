@@ -316,7 +316,8 @@ class SafariBooks:
     def __init__(self, args):
         self.args = args
         #self.display = Display("info_%s.log" % escape(args.bookid))
-        self.display = Display("info.log")
+        self.display = Display("info_%s.log" % escape('12343'))
+        #self.display = Display("info.log")
         self.display.intro()
 
         self.session = requests.Session()
