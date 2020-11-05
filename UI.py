@@ -21,16 +21,19 @@ password = st.text_input("Contraseña:", value="", type="password")
 
 credentials = user + ":" + password
 
-if st.button("Login"):
-    args.cred = sb.SafariBooks.parse_cred(credentials)
-    libro = sb.SafariBooks(args)
-    st.write(args.cred)
+@st.cache
+def main():
+    if st.button("Login"):
+        args.cred = sb.SafariBooks.parse_cred(credentials)
+        libro = sb.SafariBooks(args)
+        st.write(args.cred)
 
-#De momento por defecto
-    args.bookid = st.text_input("Código del libro:", value="")
-    sys.stdout.write("funciona?")
-
-    @st.cache
-    if st.button("Descargar libro"):
+        args.bookid = st.text_input("Código del libro:", value="")
         sys.stdout.write("funciona?")
-        libro.descargar_libro(args)
+
+
+        if st.button("Descargar libro"):
+            sys.stdout.write("funciona?")
+            libro.descargar_libro(args)
+
+main()
