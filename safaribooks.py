@@ -16,7 +16,6 @@ from random import random
 from lxml import html, etree
 from multiprocessing import Process, Queue, Value
 from urllib.parse import urljoin, urlparse, parse_qs, quote_plus
-import streamlit as st
 
 
 PATH = os.path.dirname(os.path.realpath(__file__))
@@ -127,7 +126,7 @@ class Display:
 
         self.save_last_request()
         sys.exit(1)
-        st.stop()
+
     def unhandled_exception(self, _, o, tb):
         self.log("".join(traceback.format_tb(tb)))
         self.exit("Unhandled Exception: %s (type: %s)" % (o, o.__class__.__name__))
@@ -465,14 +464,14 @@ class SafariBooks:
     def do_login(self, email, password):
         response = self.requests_provider(self.LOGIN_ENTRY_URL)
         if response == 0:
-            st.write("Login: unable to reach Safari Books Online. Try again...")
+            self.display.exit("Login: unable to reach Safari Books Online. Try again...")
 
         next_parameter = None
         try:
             next_parameter = parse_qs(urlparse(response.request.url).query)["next"][0]
 
         except (AttributeError, ValueError, IndexError):
-            st.write("Login: unable to complete login on Safari Books Online. Try again...")
+            self.display.exit("Login: unable to complete login on Safari Books Online. Try again...")
 
         redirect_uri = API_ORIGIN_URL + quote_plus(next_parameter)
 
@@ -488,10 +487,10 @@ class SafariBooks:
         )
 
         if response == 0:
-            st.write("Login: unable to perform auth to Safari Books Online.\n    Try again...")
+            self.display.exit("Login: unable to perform auth to Safari Books Online.\n    Try again...")
 
         if response.status_code != 200:  # TODO To be reviewed
-            """try:
+            try:
                 error_page = html.fromstring(response.text)
                 errors_message = error_page.xpath("//ul[@class='errorlist']//li/text()")
                 recaptcha = error_page.xpath("//div[@class='g-recaptcha']")
@@ -499,20 +498,18 @@ class SafariBooks:
                              if "password" in error or "email" in error] if len(errors_message) else []) + \
                            (["    `ReCaptcha required (wait or do logout from the website).`"] if len(
                                recaptcha) else [])
-                st.write(
+                self.display.exit(
                     "Login: unable to perform auth login to Safari Books Online.\n" + self.display.SH_YELLOW +
                     "[*]" + self.display.SH_DEFAULT + " Details:\n" + "%s" % "\n".join(
                         messages if len(messages) else ["    Unexpected error!"])
                 )
             except (html.etree.ParseError, html.etree.ParserError) as parsing_error:
-                st.write(parsing_error)
-                st.write(
+                self.display.error(parsing_error)
+                self.display.exit(
                     "Login: your login went wrong and it encountered in an error"
                     " trying to parse the login details of Safari Books Online. Try again..."
                 )
-            """
-            st.write("Mail o contraseña mal metidos")
-            st.stop()
+
         self.jwt = response.json()  # TODO: save JWT Tokens and use the refresh_token to restore user session
         response = self.requests_provider(self.jwt["redirect_uri"])
         if response == 0:
@@ -539,7 +536,6 @@ class SafariBooks:
 
         response = response.json()
         if not isinstance(response, dict) or len(response.keys()) == 1:
-            st.write("Código del libro incorrecto.")
             self.display.exit(self.display.api_error(response))
 
         if "last_chapter_read" in response:
@@ -1093,8 +1089,6 @@ if __name__ == "__main__":
     )
 
     args_parsed = arguments.parse_args()
-    print(type(args_parsed))
-    print(args_parsed)
     if args_parsed.cred or args_parsed.login:
         user_email = ""
         pre_cred = ""
