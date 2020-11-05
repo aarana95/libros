@@ -18,7 +18,8 @@ from multiprocessing import Process, Queue, Value
 from urllib.parse import urljoin, urlparse, parse_qs, quote_plus
 import streamlit as st
 
-PATH = os.path.dirname(os.path.realpath(r"C:\Users\arana\PycharmProjects\libros\safaribooks.py"))
+
+PATH = os.path.dirname(os.path.realpath("/"))
 COOKIES_FILE = os.path.join(PATH, "cookies.json")
 
 ORLY_BASE_HOST = "oreilly.com"  # PLEASE INSERT URL HERE
@@ -192,6 +193,7 @@ class Display:
                 "\r    " + self.SH_BG_YELLOW + "[" + ("#" * bar).ljust(self.columns - 11, "-") + "]" +
                 self.SH_DEFAULT + ("%4s" % progress) + "%" + ("\n" if progress == 100 else "")
             )
+
 
     def done(self, epub_file):
         self.info("Done: %s\n\n" % epub_file +
@@ -838,7 +840,7 @@ class SafariBooks:
                         (
                             self.filename.replace(".html", ".xhtml"),
                             " (especially because you selected the `--no-kindle` option)"
-                            if self.args.kindle else ""
+                            if self.args.no_kindle else ""
                         )
                     )
                     self.display.book_ad_info = 2
@@ -1119,12 +1121,6 @@ if True:#__name__ == "__main__":
     parsed_cred = SafariBooks.parse_cred(pre_cred)
 
     args_parsed = argparse.Namespace()
-    args_parsed.kindle = False
-    args_parsed.log = False
-    args_parsed.login = False
-    args_parsed.no_cookies = False
-    args_parsed.bookid = "9781788839150"
-    args_parsed.cred = parsed_cred
     SafariBooks(args_parsed)
     # Hint: do you want to download more then one book once, initialized more than one instance of `SafariBooks`...
     sys.exit(0)
