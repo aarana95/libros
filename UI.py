@@ -25,6 +25,7 @@ def main(args):
     credentials = session_state.user + ":" + session_state.password
 
     session_state.login_button = st.button("Login")
+    st.write(session_state.login_button)
     if session_state.login_button:
         args.cred = sb.SafariBooks.parse_cred(credentials)
         session_state.libro = sb.SafariBooks(args)
@@ -32,7 +33,7 @@ def main(args):
 
         args.bookid = st.text_input("Código del libro:", value="")
 
-        st.write(session_state.login_button)
+
         if st.button("Descargar libro"):
             sys.stdout.write("funciona?")
             session_state.libro.descargar_libro(args)
