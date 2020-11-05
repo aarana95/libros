@@ -4,7 +4,7 @@ import streamlit as st
 #import numpy as np
 import safaribooks as sb
 import argparse
-
+import sys
 args = argparse.Namespace()
 
 args.kindle = False
@@ -30,5 +30,5 @@ if st.button("Login"):
     args.bookid = st.text_input("Código del libro:", value="")
 
     if st.button("Descargar libro"):
-
+        sys.stdout.write("funciona?")
         libro.descargar_libro(args)
