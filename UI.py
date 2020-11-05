@@ -21,13 +21,25 @@ def main(args):
     text_file.write("Purchase Amount")
     text_file.close()
     #st.markdown(href = f'<a href="data:Books">Download csv file</a>', unsafe_allow_html=True)
+    def get_table_download_link(text_file):
+        """Generates a link allowing the data in a given panda dataframe to be downloaded
+        in:  dataframe
+        out: href string
+        """
+        #csv = df.to_csv(index=False)
+        #b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+        href = f'<a href="data:file/csv;base64,{text_file}">Download csv file</a>'
 
     if st.button('Go to Streamlit'):
+        st.markdown(get_table_download_link(df), unsafe_allow_html=True)
+
         js = "window.open('https://www.streamlit.io/')"  # New tab or window
         js = "window.location.href = 'Books/Output.txt'"  # Current tab
         html = '<img src onerror="{}">'.format(js)
         div = Div(text=html)
         st.bokeh_chart(div)
+
+
     session_state = SessionState.get(name="", button_start=False)
 
     st.title('Estamos probando')
