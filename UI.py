@@ -18,9 +18,9 @@ credentials = user + ":" + password
 args.cred = sb.SafariBooks.parse_cred(credentials)
 
 #De momento por defecto
-args.kindle = False
-args.log = False
-args.login = False
-args.no_cookies = False
+args_parsed.kindle = False
+args_parsed.log = False
+args_parsed.login = False
+args_parsed.no_cookies = False
 
 sb.SafariBooks(args)

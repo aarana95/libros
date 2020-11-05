@@ -16,9 +16,9 @@ from random import random
 from lxml import html, etree
 from multiprocessing import Process, Queue, Value
 from urllib.parse import urljoin, urlparse, parse_qs, quote_plus
+import streamlit as st
 
-
-PATH = os.path.dirname(os.path.realpath(__file__))
+PATH = os.path.dirname(os.path.realpath(r"C:\Users\arana\PycharmProjects\libros\safaribooks.py"))
 COOKIES_FILE = os.path.join(PATH, "cookies.json")
 
 ORLY_BASE_HOST = "oreilly.com"  # PLEASE INSERT URL HERE
@@ -182,9 +182,11 @@ class Display:
             self.info("{0}{1}{2}: {3}".format(self.SH_YELLOW, t[0], self.SH_DEFAULT, t[1]), True)
 
     def state(self, origin, done):
+        my_bar = st.progress(0)
         progress = int(done * 100 / origin)
         bar = int(progress * (self.columns - 11) / 100)
         if self.state_status.value < progress:
+            my_bar.progress(progress)
             self.state_status.value = progress
             sys.stdout.write(
                 "\r    " + self.SH_BG_YELLOW + "[" + ("#" * bar).ljust(self.columns - 11, "-") + "]" +
@@ -836,7 +838,7 @@ class SafariBooks:
                         (
                             self.filename.replace(".html", ".xhtml"),
                             " (especially because you selected the `--no-kindle` option)"
-                            if self.args.no_kindle else ""
+                            if self.args.kindle else ""
                         )
                     )
                     self.display.book_ad_info = 2
@@ -1050,7 +1052,8 @@ class SafariBooks:
 
 
 # MAIN
-if __name__ == "__main__":
+if True:#__name__ == "__main__":
+    """
     arguments = argparse.ArgumentParser(prog="safaribooks.py",
                                         description="Download and generate an EPUB of your favorite books"
                                                     " from Safari Books Online.",
@@ -1101,8 +1104,6 @@ if __name__ == "__main__":
             passwd = getpass.getpass("Password: ")
             pre_cred = user_email + ":" + passwd
 
-        parsed_cred = SafariBooks.parse_cred(pre_cred)
-
         if not parsed_cred:
             arguments.error("invalid credential: %s" % (
                 args_parsed.cred if args_parsed.cred else (user_email + ":*******")
@@ -1113,7 +1114,17 @@ if __name__ == "__main__":
     else:
         if args_parsed.no_cookies:
             arguments.error("invalid option: `--no-cookies` is valid only if you use the `--cred` option")
+            """
+    pre_cred = "daniel.data@thebridgeschool.es:Productitos2020"
+    parsed_cred = SafariBooks.parse_cred(pre_cred)
 
+    args_parsed = argparse.Namespace()
+    args_parsed.kindle = False
+    args_parsed.log = False
+    args_parsed.login = False
+    args_parsed.no_cookies = False
+    args_parsed.bookid = "9781788839150"
+    args_parsed.cred = parsed_cred
     SafariBooks(args_parsed)
     # Hint: do you want to download more then one book once, initialized more than one instance of `SafariBooks`...
     sys.exit(0)
