@@ -31,7 +31,7 @@ def main(args):
         href = f'<a href="data:file/csv;base64,{text_file}">Download csv file</a>'
 
     if st.button('Go to Streamlit'):
-        st.markdown(get_table_download_link(df), unsafe_allow_html=True)
+        st.markdown(get_table_download_link(text_file), unsafe_allow_html=True)
 
 
 
