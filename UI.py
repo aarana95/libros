@@ -8,6 +8,8 @@ import sys
 import SessionState
 import webbrowser
 from bokeh.models.widgets import Div
+import base64
+import pandas as pd
 args = argparse.Namespace()
 
 args.kindle = False
@@ -21,17 +23,18 @@ def main(args):
     text_file.write("Purchase Amount")
     #text_file.close()
     #st.markdown(href = f'<a href="data:Books">Download csv file</a>', unsafe_allow_html=True)
-    def get_table_download_link(text_file):
+    def get_table_download_link(df):
         """Generates a link allowing the data in a given panda dataframe to be downloaded
         in:  dataframe
         out: href string
         """
-        #csv = df.to_csv(index=False)
-        #b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-        href = f'<a href="data:file/csv;base64,{text_file}">Download csv file</a>'
+        csv = df.to_csv(index=False)
+        b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
+        href = f'<a href="data:file/csv;base64,{b64}">Download csv file</a>'
 
     if st.button('Go to Streamlit'):
-        st.markdown(get_table_download_link(text_file), unsafe_allow_html=True)
+        df = pd.DataFrame({'A': [1, 2], 'B': [2, 3]})
+        st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
 
 
