@@ -24,8 +24,8 @@ def main(args):
 
     credentials = session_state.user + ":" + session_state.password
 
-
-    if st.button("Login"):
+    session_state.login_button = st.button("Login")
+    if login_button:
         args.cred = sb.SafariBooks.parse_cred(credentials)
         libro = sb.SafariBooks(args)
         st.write(args.cred)
