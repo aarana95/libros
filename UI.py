@@ -18,14 +18,17 @@ def main(args):
     session_state = SessionState.get(name="", button_start=False)
 
     st.title('Estamos probando')
-    st.write(session_state.login_button)
+
     session_state.user = st.text_input("Usuario:", value="")
     session_state.password = st.text_input("Contraseña:", value="", type="password")
 
     credentials = session_state.user + ":" + session_state.password
 
-    session_state.login_button = st.button("Login")
-    st.write(session_state.login_button)
+
+
+    if not hasattr(session_state, 'login_button'):
+        session_state.login_button = st.button("Login")
+
     if session_state.login_button:
         args.cred = sb.SafariBooks.parse_cred(credentials)
         session_state.libro = sb.SafariBooks(args)
