@@ -22,7 +22,7 @@ password = st.text_input("Contraseña:", value="", type="password")
 credentials = user + ":" + password
 
 @st.cache
-def main():
+def main(args, credentials):
     if st.button("Login"):
         args.cred = sb.SafariBooks.parse_cred(credentials)
         libro = sb.SafariBooks(args)
@@ -36,4 +36,4 @@ def main():
             sys.stdout.write("funciona?")
             libro.descargar_libro(args)
 
-main()
+main(args, credentials)
