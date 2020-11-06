@@ -351,7 +351,7 @@ class SafariBooks:
 
 
     def descargar_libro(self, args):
-        sys.stdout.write("funciona?2")
+
         self.book_id = args.bookid
         self.api_url = self.API_TEMPLATE.format(self.book_id)
 
@@ -369,7 +369,7 @@ class SafariBooks:
 
         self.book_title = self.book_info["title"]
         self.base_url = self.book_info["web_url"]
-        sys.stdout.write("funciona?3")
+
         self.clean_book_title = "".join(self.escape_dirname(self.book_title).split(",")[:2]) \
                                 + " ({0})".format(self.book_id)
 
@@ -392,6 +392,7 @@ class SafariBooks:
         self.BASE_HTML = self.BASE_01_HTML + (self.KINDLE_HTML if not args.kindle else "") + self.BASE_02_HTML
         st.write("Descargando el contenido de los libros...")
         self.cover = False
+        breakpoint()
         self.get()
         if not self.cover:
             self.cover = self.get_default_cover()
@@ -415,8 +416,8 @@ class SafariBooks:
         self.display.info("Downloading book images... (%s files)" % len(self.images), state=True)
         st.write("Descargando las imagenes de los libros...")
         self.collect_images()
-        sys.stdout.write("funciona?7")
         self.display.info("Creating EPUB file...", state=True)
+        st.write("Creando EPUB...")
         self.create_epub()
 
         if not args.no_cookies:
