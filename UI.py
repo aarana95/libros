@@ -49,10 +49,6 @@ def main(args):
     df = pd.DataFrame({'A': [1, 2], 'B': [2, 3]})
     st.markdown(get_table_download_link(df), unsafe_allow_html=True)
 
-    if st.button('Go to Streamlit'):
-        webbrowser.open_new_tab(get_table_download_link2(df))
-
-
 
     session_state = SessionState.get(name="", button_start=False)
 

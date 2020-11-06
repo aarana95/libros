@@ -341,6 +341,7 @@ class SafariBooks:
 
         else:
             self.display.info("Logging into Safari Books Online...", state=True)
+            st.write("Logging movidas...")
             self.do_login(*args.cred)
             if not args.no_cookies:
                 json.dump(self.session.cookies.get_dict(), open(COOKIES_FILE, 'w'))
@@ -387,10 +388,10 @@ class SafariBooks:
         self.chapter_stylesheets = []
         self.css = []
         self.images = []
-
+        st.write("funciona?1")
         self.display.info("Downloading book contents... (%s chapters)" % len(self.book_chapters), state=True)
         self.BASE_HTML = self.BASE_01_HTML + (self.KINDLE_HTML if not args.kindle else "") + self.BASE_02_HTML
-        sys.stdout.write("funciona?5")
+        st.write("funciona?5")
         self.cover = False
         self.get()
         if not self.cover:
