@@ -30,9 +30,6 @@ def main(args):
 
     credentials = session_state.user + ":" + session_state.password
 
-    st.write(hasattr(session_state, 'login_button'))
-    st.write(session_state.password)
-    st.write(hasattr(session_state, 'password'))
     if not hasattr(session_state, 'login_button') or (session_state.user == '' or session_state.password == '' or not session_state.login_button):
         session_state.login_button = st.button("Login")
 
