@@ -186,11 +186,11 @@ class Display:
             self.info("{0}{1}{2}: {3}".format(self.SH_YELLOW, t[0], self.SH_DEFAULT, t[1]), True)
 
     def state(self, origin, done):
-        my_bar = st.progress(0)
+
         progress = int(done * 100 / origin)
         bar = int(progress * (self.columns - 11) / 100)
         if self.state_status.value < progress:
-            my_bar.progress(progress)
+            self.my_bar.progress(progress)
             self.state_status.value = progress
             sys.stdout.write(
                 "\r    " + self.SH_BG_YELLOW + "[" + ("#" * bar).ljust(self.columns - 11, "-") + "]" +
@@ -815,7 +815,7 @@ class SafariBooks:
 
     def get(self):
         len_books = len(self.book_chapters)
-
+        self.display.my_bar = st.progress(0)
         for _ in range(len_books):
             if not len(self.chapters_queue):
                 return
@@ -880,7 +880,7 @@ class SafariBooks:
                 s.write(response.content)
 
         self.css_done_queue.put(1)
-        self.display.state(len(self.css), self.css_done_queue.qsize())
+        #self.display.state(len(self.css), self.css_done_queue.qsize())
 
     def _thread_download_images(self, url):
         image_name = url.split("/")[-1]
@@ -905,7 +905,7 @@ class SafariBooks:
                     img.write(chunk)
 
         self.images_done_queue.put(1)
-        self.display.state(len(self.images), self.images_done_queue.qsize())
+        #self.display.state(len(self.images), self.images_done_queue.qsize())
 
     def _start_multiprocessing(self, operation, full_queue):
         if len(full_queue) > 5:
