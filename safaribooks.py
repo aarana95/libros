@@ -127,7 +127,6 @@ class Display:
 
         self.save_last_request()
         st.write(error)
-        st.write("Lo que viene siendo que has metido el mail o la contraseña mal!")
         st.stop()
         sys.exit(1)
 
@@ -341,7 +340,6 @@ class SafariBooks:
 
         else:
             self.display.info("Logging into Safari Books Online...", state=True)
-            st.write("Logging movidas...")
             self.do_login(*args.cred)
             if not args.no_cookies:
                 json.dump(self.session.cookies.get_dict(), open(COOKIES_FILE, 'w'))
