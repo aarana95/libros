@@ -13,6 +13,7 @@ import pandas as pd
 args = argparse.Namespace()
 
 args.kindle = False
+args.no_kindle = True
 args.log = False
 args.login = False
 args.no_cookies = False
