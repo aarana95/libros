@@ -1065,6 +1065,15 @@ class SafariBooks:
         shutil.make_archive(zip_file, 'zip', self.BOOK_PATH)
         os.rename(zip_file + ".zip", os.path.join(self.BOOK_PATH, self.book_id) + ".epub")
 
+        dir = os.path.join(self.BOOK_PATH, self.book_id) + ".epub"
+
+        with open(dir, 'rb') as f:
+            book = f.read()
+
+        b64 = base64.b64encode(book).decode()
+
+        href = f'<a href="data:file/epub;base64,{b64}">Descargar el libro</a>'
+        st.markdown(href, unsafe_allow_html=True)
 
 # MAIN
 """
