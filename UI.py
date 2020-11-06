@@ -41,7 +41,7 @@ def main(args):
         """
         csv = df.to_csv(index=False)
         b64 = base64.b64encode(csv.encode()).decode()  # some strings <-> bytes conversions necessary here
-        href = f"data:file/csv;base64,{b64}"
+        href = f"data:file/epub;base64,{b64}"
         st.write(href)
         return href
 

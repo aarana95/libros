@@ -392,7 +392,6 @@ class SafariBooks:
         self.BASE_HTML = self.BASE_01_HTML + (self.KINDLE_HTML if not args.kindle else "") + self.BASE_02_HTML
         st.write("Descargando el contenido de los libros...")
         self.cover = False
-        breakpoint()
         self.get()
         if not self.cover:
             self.cover = self.get_default_cover()
@@ -1068,6 +1067,7 @@ class SafariBooks:
 
 
 # MAIN
+"""
 if __name__ == "__main__":
 
     arguments = argparse.ArgumentParser(prog="safaribooks.py",
@@ -1137,3 +1137,4 @@ if __name__ == "__main__":
     SafariBooks(args_parsed)
     # Hint: do you want to download more then one book once, initialized more than one instance of `SafariBooks`...
     sys.exit(0)
+"""
