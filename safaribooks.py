@@ -388,10 +388,9 @@ class SafariBooks:
         self.chapter_stylesheets = []
         self.css = []
         self.images = []
-        st.write("funciona?1")
         self.display.info("Downloading book contents... (%s chapters)" % len(self.book_chapters), state=True)
         self.BASE_HTML = self.BASE_01_HTML + (self.KINDLE_HTML if not args.kindle else "") + self.BASE_02_HTML
-        st.write("funciona?5")
+        st.write("Descargando el contenido de los libros...")
         self.cover = False
         self.get()
         if not self.cover:
@@ -410,9 +409,11 @@ class SafariBooks:
 
         self.css_done_queue = Queue(0) if "win" not in sys.platform else WinQueue()
         self.display.info("Downloading book CSSs... (%s files)" % len(self.css), state=True)
+        st.write("Descargando CSS de los libros...")
         self.collect_css()
         self.images_done_queue = Queue(0) if "win" not in sys.platform else WinQueue()
         self.display.info("Downloading book images... (%s files)" % len(self.images), state=True)
+        st.write("Descargando las imagenes de los libros...")
         self.collect_images()
         sys.stdout.write("funciona?7")
         self.display.info("Creating EPUB file...", state=True)
@@ -880,7 +881,7 @@ class SafariBooks:
                 s.write(response.content)
 
         self.css_done_queue.put(1)
-        #self.display.state(len(self.css), self.css_done_queue.qsize())
+        self.display.state(len(self.css), self.css_done_queue.qsize())
 
     def _thread_download_images(self, url):
         image_name = url.split("/")[-1]
@@ -905,7 +906,7 @@ class SafariBooks:
                     img.write(chunk)
 
         self.images_done_queue.put(1)
-        #self.display.state(len(self.images), self.images_done_queue.qsize())
+        self.display.state(len(self.images), self.images_done_queue.qsize())
 
     def _start_multiprocessing(self, operation, full_queue):
         if len(full_queue) > 5:
@@ -924,6 +925,7 @@ class SafariBooks:
         self.display.state_status.value = -1
 
         # "self._start_multiprocessing" seems to cause problem. Switching to mono-thread download.
+        self.display.my_bar = st.progress(0)
         for css_url in self.css:
             self._thread_download_css(css_url)
 
@@ -937,6 +939,7 @@ class SafariBooks:
         self.display.state_status.value = -1
 
         # "self._start_multiprocessing" seems to cause problem. Switching to mono-thread download.
+        self.display.my_bar = st.progress(0)
         for image_url in self.images:
             self._thread_download_images(image_url)
 
